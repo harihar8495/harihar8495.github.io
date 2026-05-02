@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hariharan — Web Developer & SEO Specialist</title>
+<meta name="description" content="Hariharan is a Web Developer & SEO Specialist based in Coimbatore, India. Building fast, beautiful WordPress and Shopify websites that rank.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Cabinet+Grotesk:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── SKIP LINK ── */
+.skip-link {
+  position: absolute; top: -100%; left: 1rem;
+  background: var(--lime, #C8F557); color: #0C0C0C;
+  font-family: 'DM Mono', monospace; font-size: 0.8rem;
+  font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.6rem 1.2rem; text-decoration: none; z-index: 9999;
+  border-radius: 4px;
+}
+.skip-link:focus { top: 1rem; }
+
+/* ── FOCUS STYLES ── */
+:focus-visible {
+  outline: 2px solid #C8F557;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+a:focus-visible, button:focus-visible {
+  outline: 2px solid #C8F557;
+  outline-offset: 4px;
+}
+
+:root {
+  --lime: #C8F557;
+  --lime-dim: rgba(200,245,87,0.12);
+  --lime-dim2: rgba(200,245,87,0.06);
+  --bg: #0C0C0C;
+  --bg2: #111111;
+  --bg3: #161616;
+  --white: #F0EDE6;
+  --white2: #A8A49C;
+  --white3: #888480;
+  --border: rgba(240,237,230,0.08);
+  --border2: rgba(240,237,230,0.14);
+  --radius: 4px;
+}
+
+html { scroll-behavior: smooth; cursor: none; }
+
+body {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── CUSTOM CURSOR ── */
+#cursor {
+  width: 10px; height: 10px;
+  background: var(--lime);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, background 0.2s, width 0.2s, height 0.2s;
+  mix-blend-mode: difference;
+}
+#cursor-ring {
+  width: 38px; height: 38px;
+  border: 1.5px solid rgba(200,245,87,0.55);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: left 0.12s ease-out, top 0.12s ease-out, width 0.3s, height 0.3s, border-color 0.2s;
+}
+body.cursor-hover #cursor { width: 0; height: 0; }
+body.cursor-hover #cursor-ring { width: 60px; height: 60px; border-color: var(--lime); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 4vw;
+  height: 64px;
+  background: rgba(12,12,12,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s;
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.nav-logo span { color: var(--lime); }
+
+.nav-links {
+  display: flex; gap: 2.5rem; list-style: none;
+}
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white2);
+  text-decoration: none;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute; bottom: -3px; left: 0; right: 0;
+  height: 1px; background: var(--lime);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.25s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--lime); }
+.nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+
+.nav-cta {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--lime);
+  text-decoration: none;
+  padding: 0.55rem 1.25rem;
+  border-radius: var(--radius);
+  transition: background 0.2s, transform 0.15s;
+  display: inline-block;
+}
+.nav-cta:hover { background: #d9ff77; transform: translateY(-1px); }
+
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: none; background: none; border: none; padding: 4px;
+}
+.hamburger span { display: block; width: 22px; height: 1.5px; background: var(--white); transition: 0.3s; }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4.5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4.5px); }
+
+.mobile-menu {
+  display: none; position: fixed; inset: 0; top: 64px;
+  background: var(--bg); z-index: 400;
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: 2.5rem;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 700;
+  color: var(--white); text-decoration: none; transition: color 0.2s;
+}
+.mobile-menu a:hover { color: var(--lime); }
+.mobile-menu .m-cta {
+  font-family: 'DM Mono', monospace; font-size: 0.85rem;
+  color: var(--bg); background: var(--lime); padding: 0.7rem 2rem;
+  border-radius: var(--radius); font-weight: 400;
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0; transform: translateY(36px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-36px); transition: opacity 0.75s ease, transform 0.75s ease; }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right { opacity: 0; transform: translateX(36px); transition: opacity 0.75s ease, transform 0.75s ease; }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 4vw 5rem;
+  position: relative;
+  overflow: hidden;
+  padding-top: 64px;
+}
+
+.hero-bg-text {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(8rem, 22vw, 24rem);
+  font-weight: 800;
+  color: rgba(200,245,87,0.025);
+  white-space: nowrap;
+  letter-spacing: -0.04em;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: flex-end;
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+  padding-top: 3.5rem;
+}
+
+.hero-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--white2);
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeSlide 0.6s 0.1s forwards;
+  display: flex; align-items: center; gap: 1rem;
+}
+.hero-name::before {
+  content: ''; display: inline-block;
+  width: 0.6rem; height: 0.6rem;
+  background: var(--lime); border-radius: 50%;
+}
+
+.hero-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 0.75rem;
+  opacity: 0; animation: fadeSlide 0.7s 0.3s forwards;
+}
+.hero-tag::before {
+  content: ''; display: inline-block; width: 2rem; height: 1px; background: var(--lime);
+}
+
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(3rem, 8vw, 8rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  margin-bottom: 2.5rem;
+}
+.hero-title .word { display: inline-block; overflow: hidden; }
+.hero-title .word-inner {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: wordReveal 0.85s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+.hero-title .word:nth-child(1) .word-inner { animation-delay: 0.1s; }
+.hero-title .word:nth-child(2) .word-inner { animation-delay: 0.2s; }
+.hero-title .word:nth-child(3) .word-inner { animation-delay: 0.3s; }
+.hero-title .word:nth-child(4) .word-inner { animation-delay: 0.4s; }
+.hero-title .word:nth-child(5) .word-inner { animation-delay: 0.5s; }
+.hero-title .word:nth-child(6) .word-inner { animation-delay: 0.6s; }
+.hero-title .lime { color: var(--lime); }
+
+.hero-meta {
+  display: flex; align-items: flex-end; gap: 2rem;
+  flex-direction: column; text-align: right;
+  opacity: 0; animation: fadeSlide 0.7s 0.8s forwards;
+}
+.hero-location {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--white3);
+}
+.hero-scroll {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--white3);
+  display: flex; align-items: center; gap: 0.5rem;
+  writing-mode: vertical-rl; text-orientation: mixed;
+}
+.hero-scroll::after {
+  content: ''; display: block; width: 1px; height: 3rem; background: var(--white3);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+.hero-bottom {
+  display: flex; align-items: center; gap: 3rem;
+  border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 3rem;
+  opacity: 0; animation: fadeSlide 0.7s 0.9s forwards;
+}
+.hero-desc {
+  font-size: 1rem; font-weight: 300; color: var(--white2); max-width: 420px; line-height: 1.75;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* ── BUTTONS ── */
+.btn-primary {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--bg); background: var(--lime);
+  text-decoration: none; padding: 0.85rem 2rem; border-radius: var(--radius);
+  display: inline-block; border: none; cursor: none;
+  transition: background 0.2s, transform 0.15s;
+  position: relative; overflow: hidden;
+}
+.btn-primary:hover { background: #d9ff77; }
+
+.btn-outline {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--lime); background: transparent;
+  text-decoration: none; padding: 0.85rem 2rem; border-radius: var(--radius);
+  display: inline-block; border: 1px solid rgba(200,245,87,0.4); cursor: none;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+.btn-outline:hover { border-color: var(--lime); background: var(--lime-dim); }
+
+/* ── TICKER ── */
+.ticker-wrap {
+  background: var(--lime); overflow: hidden;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.ticker-track {
+  display: flex; align-items: center; gap: 0;
+  animation: ticker 30s linear infinite; white-space: nowrap;
+}
+.ticker-item {
+  font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--bg);
+  padding: 0 2.5rem; display: flex; align-items: center; gap: 2.5rem;
+}
+.ticker-item::after { content: '✦'; font-size: 0.6rem; }
+
+/* ── SECTION COMMONS ── */
+section { padding: 7rem 4vw; }
+
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 0.68rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--lime);
+  margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;
+}
+.section-label::before { content: ''; display: inline-block; width: 1.5rem; height: 1px; background: var(--lime); }
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800;
+  line-height: 1; letter-spacing: -0.03em; color: var(--white);
+}
+.section-title .lime { color: var(--lime); }
+
+/* ── ABOUT ── */
+.about { background: var(--bg2); border-top: 1px solid var(--border); }
+
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; margin-top: 4rem;
+}
+
+.about-left p {
+  font-size: 1rem; font-weight: 300; color: var(--white2);
+  line-height: 1.85; margin-bottom: 1.2rem;
+}
+.about-left p strong { color: var(--white); font-weight: 500; }
+
+.stats-row {
+  display: flex; gap: 2.5rem; margin-top: 3rem; flex-wrap: wrap;
+}
+.stat-item {}
+.stat-num {
+  font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800;
+  color: var(--lime); letter-spacing: -0.04em; line-height: 1;
+}
+.stat-num span { font-size: 2rem; }
+.stat-label {
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--white3); margin-top: 0.25rem;
+}
+
+.skills-wrap { display: flex; flex-direction: column; gap: 1rem; }
+
+.skill-category { margin-bottom: 1rem; }
+.skill-cat-label {
+  font-family: 'DM Mono', monospace; font-size: 0.62rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--white3);
+  margin-bottom: 0.75rem;
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.skill-tag {
+  font-family: 'DM Mono', monospace; font-size: 0.7rem;
+  color: var(--white2); background: var(--bg3);
+  border: 1px solid var(--border2); padding: 0.35rem 0.85rem;
+  border-radius: 2px; transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.skill-tag:hover { border-color: var(--lime); color: var(--lime); background: var(--lime-dim2); }
+
+/* ── PROJECTS ── */
+.projects { background: var(--bg); border-top: 1px solid var(--border); }
+
+.projects-header {
+  display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem;
+}
+
+.projects-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+}
+
+.project-card {
+  background: var(--bg3); border: 1px solid var(--border);
+  overflow: hidden; border-radius: var(--radius);
+  text-decoration: none; display: block;
+  position: relative; transition: border-color 0.3s, transform 0.3s;
+  group: true;
+}
+.project-card:hover { border-color: rgba(200,245,87,0.3); transform: translateY(-4px); }
+
+.project-img-wrap {
+  overflow: hidden; aspect-ratio: 16/10; position: relative;
+}
+.project-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  display: block;
+}
+.project-card:hover .project-img-wrap img { transform: scale(1.05); }
+
+.project-info { padding: 1.5rem 1.75rem 2rem; }
+.project-tag {
+  font-family: 'DM Mono', monospace; font-size: 0.62rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--lime); margin-bottom: 0.5rem;
+}
+.project-name {
+  font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700;
+  color: var(--white); margin-bottom: 0.35rem; letter-spacing: -0.02em;
+}
+.project-desc {
+  font-size: 0.85rem; font-weight: 300; color: var(--white2); line-height: 1.65;
+}
+.project-url {
+  font-family: 'DM Mono', monospace; font-size: 0.68rem;
+  color: var(--white3); margin-top: 1rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  transition: color 0.2s;
+}
+.project-card:hover .project-url { color: var(--lime); }
+.project-url::after { content: '↗'; }
+
+.projects-footer {
+  text-align: center; margin-top: 3.5rem;
+}
+
+/* ── CONTACT ── */
+.contact {
+  background: var(--bg2); border-top: 1px solid var(--border);
+  text-align: center; padding: 8rem 4vw;
+}
+.contact-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(3rem, 8vw, 7rem); font-weight: 800;
+  letter-spacing: -0.04em; line-height: 0.95;
+  color: var(--white); margin-bottom: 1.5rem;
+}
+.contact-title .lime { color: var(--lime); }
+.contact-sub {
+  font-size: 1rem; font-weight: 300; color: var(--white2);
+  max-width: 460px; margin: 0 auto 3rem; line-height: 1.75;
+}
+.contact-links {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+}
+.contact-email {
+  font-family: 'DM Mono', monospace; font-size: 0.78rem;
+  letter-spacing: 0.08em; color: var(--white2);
+  border: 1px solid var(--border2); padding: 0.85rem 1.75rem;
+  border-radius: var(--radius); text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.contact-email:hover { border-color: var(--lime); color: var(--lime); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg); border-top: 1px solid var(--border);
+  padding: 2rem 4vw;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+}
+.footer-copy {
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.08em; color: var(--white3);
+}
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a {
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.08em; color: var(--white3); text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--lime); }
+
+/* ── WHATSAPP WIDGET ── */
+.wa-widget {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;
+}
+.wa-btn {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #25D366; display: flex; align-items: center; justify-content: center;
+  text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+  position: relative; transition: transform 0.2s;
+}
+.wa-btn:hover { transform: scale(1.1); }
+.wa-btn::before {
+  content: ''; position: absolute; inset: 0; border-radius: 50%;
+  background: rgba(37,211,102,0.35);
+  animation: waPulse 2s ease-out infinite;
+}
+.wa-btn svg { width: 28px; height: 28px; fill: #fff; position: relative; z-index: 1; }
+.wa-tooltip {
+  position: absolute; right: 110%; top: 50%; transform: translateY(-50%);
+  background: var(--bg2); border: 1px solid var(--border2);
+  color: var(--white); font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.06em; white-space: nowrap; padding: 0.4rem 0.8rem;
+  border-radius: var(--radius); opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+}
+.wa-btn:hover + .wa-tooltip, .wa-widget:hover .wa-tooltip { opacity: 1; }
+
+/* ── KEYFRAMES ── */
+@keyframes wordReveal {
+  from { transform: translateY(110%); }
+  to   { transform: translateY(0); }
+}
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 1; }
+}
+@keyframes waPulse {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .nav-links, .nav-cta { display: none; }
+  .hamburger { display: flex; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-meta { flex-direction: row; text-align: left; align-items: center; }
+  .hero-scroll { writing-mode: initial; flex-direction: row; }
+  .hero-scroll::after { width: 2rem; height: 1px; }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .projects-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+}
+@media (max-width: 600px) {
+  section { padding: 5rem 5vw; }
+  .hero { padding: 0 5vw 4rem; }
+  .hero-bottom { flex-direction: column; align-items: flex-start; }
+  .stats-row { gap: 1.5rem; }
+  footer { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">hari<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="/" class="active">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="portfolio/">Portfolio</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:hariharanthangavelu08@gmail.com" class="nav-cta">Hire Me</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/">Home</a>
+  <a href="#about" onclick="document.getElementById('mobileMenu').classList.remove('open');document.getElementById('hamburger').classList.remove('open')">About</a>
+  <a href="#projects" onclick="document.getElementById('mobileMenu').classList.remove('open');document.getElementById('hamburger').classList.remove('open')">Work</a>
+  <a href="portfolio/">Portfolio</a>
+  <a href="#contact" onclick="document.getElementById('mobileMenu').classList.remove('open');document.getElementById('hamburger').classList.remove('open')">Contact</a>
+  <a href="mailto:hariharanthangavelu08@gmail.com" class="m-cta">Hire Me</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div id="main-content"></div>
+  <div class="hero-bg-text" aria-hidden="true">WEB</div>
+  <div class="hero-grid">
+    <div>
+      <div class="hero-name">Hariharan T</div>
+      <div class="hero-tag">Available for projects · Coimbatore, India</div>
+      <h1 class="hero-title">
+        <span class="word"><span class="word-inner">Web</span></span>&#8203;
+        <span class="word"><span class="word-inner">&nbsp;</span></span>
+        <span class="word"><span class="word-inner lime">Developer</span></span>&#8203;
+        <span class="word"><span class="word-inner">&nbsp;&amp;&nbsp;</span></span>
+        <span class="word"><span class="word-inner">SEO</span></span>&#8203;
+        <span class="word"><span class="word-inner">&nbsp;Specialist</span></span>
+      </h1>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-location">📍 Coimbatore, IN</div>
+      <div class="hero-scroll">Scroll</div>
+    </div>
+  </div>
+  <div class="hero-bottom">
+    <p class="hero-desc">Building fast, beautiful WordPress and Shopify websites that rank on Google — and actually convert. 5+ years, 30+ projects, zero compromises.</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary magnetic">View My Work</a>
+      <a href="portfolio/" class="btn-outline magnetic">Full Portfolio</a>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track">
+    <div class="ticker-item">WordPress Development</div>
+    <div class="ticker-item">Shopify Development</div>
+    <div class="ticker-item">WooCommerce</div>
+    <div class="ticker-item">SEO Strategy</div>
+    <div class="ticker-item">Core Web Vitals</div>
+    <div class="ticker-item">Technical SEO</div>
+    <div class="ticker-item">Elementor</div>
+    <div class="ticker-item">PHP Development</div>
+    <div class="ticker-item">Google Analytics</div>
+    <div class="ticker-item">On-Page SEO</div>
+    <div class="ticker-item">Cloudflare</div>
+    <div class="ticker-item">WordPress Development</div>
+    <div class="ticker-item">Shopify Development</div>
+    <div class="ticker-item">WooCommerce</div>
+    <div class="ticker-item">SEO Strategy</div>
+    <div class="ticker-item">Core Web Vitals</div>
+    <div class="ticker-item">Technical SEO</div>
+    <div class="ticker-item">Elementor</div>
+    <div class="ticker-item">PHP Development</div>
+    <div class="ticker-item">Google Analytics</div>
+    <div class="ticker-item">On-Page SEO</div>
+    <div class="ticker-item">Cloudflare</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-label reveal">About Me</div>
+  <div class="about-grid">
+    <div class="about-left reveal">
+      <h2 class="section-title" style="margin-bottom:2rem;">I build websites that <span class="lime">perform.</span></h2>
+      <p>Hi, I'm <strong>Hariharan</strong> — a Web Developer based in Coimbatore, India with 4+ years of experience building WordPress and Shopify websites that are fast, secure, and built to rank.</p>
+      <p>I work closely with clients across different countries to understand their goals and deliver tailored solutions — from converting Figma designs into pixel-perfect pages, to recovering sites from malware attacks, to handling full end-to-end server migrations with zero data loss.</p>
+      <p>Beyond the build, I set up analytics, configure Google Workspace and Zoho integrations, and use tools like <strong>Microsoft Clarity and Hotjar</strong> to study real user behaviour and make data-backed design decisions. I actively use AI tools to improve development speed and quality.</p>
+      <p>Currently expanding into <strong>React and headless CMS</strong> to deliver more complex, future-ready web experiences.</p>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-num counter" data-target="5">0<span>+</span></div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num counter" data-target="150">0<span>+</span></div>
+          <div class="stat-label">Pages Delivered</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num counter" data-target="95">0<span>+</span></div>
+          <div class="stat-label">Lighthouse Score</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right reveal-right">
+      <div class="skills-wrap">
+        <div class="skill-category">
+          <div class="skill-cat-label">Web & CMS Platforms</div>
+          <div class="skill-tags">
+            <span class="skill-tag">WordPress</span>
+            <span class="skill-tag">Shopify</span>
+            <span class="skill-tag">WooCommerce</span>
+            <span class="skill-tag">Elementor</span>
+            <span class="skill-tag">Gutenberg</span>
+            <span class="skill-tag">Wix</span>
+            <span class="skill-tag">Framer</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-cat-label">Languages & Frontend</div>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML/CSS</span>
+            <span class="skill-tag">SASS</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">jQuery</span>
+            <span class="skill-tag">Bootstrap</span>
+            <span class="skill-tag">PHP</span>
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">React.js</span>
+            <span class="skill-tag">Shopify Liquid</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-cat-label">SEO & Analytics</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Technical SEO</span>
+            <span class="skill-tag">On-Page SEO</span>
+            <span class="skill-tag">Core Web Vitals</span>
+            <span class="skill-tag">Google Analytics</span>
+            <span class="skill-tag">Search Console</span>
+            <span class="skill-tag">Yoast / Rank Math</span>
+            <span class="skill-tag">Schema Markup</span>
+            <span class="skill-tag">Microsoft Clarity</span>
+            <span class="skill-tag">Hotjar</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-cat-label">DevOps, Hosting & Tools</div>
+          <div class="skill-tags">
+            <span class="skill-tag">cPanel / WHM</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Linux / Ubuntu</span>
+            <span class="skill-tag">Cloudflare</span>
+            <span class="skill-tag">Figma</span>
+            <span class="skill-tag">Canva</span>
+            <span class="skill-tag">Trello</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="projects-header reveal">
+    <div>
+      <div class="section-label">Selected Work</div>
+      <h2 class="section-title">Latest <span class="lime">Projects</span></h2>
+    </div>
+    <a href="portfolio/" class="btn-outline magnetic">View All Projects →</a>
+  </div>
+  <div class="projects-grid">
+    <a href="https://drpalmanickam.com" target="_blank" rel="noopener" class="project-card reveal">
+      <div class="project-img-wrap">
+        <img src="images/drpals.avif" alt="drpalmanickam.com" loading="lazy">
+      </div>
+      <div class="project-info">
+        <div class="project-tag">WordPress · SEO · Personal Website</div>
+        <div class="project-name">Dr. Palmanickam</div>
+        <div class="project-desc">Personal website for a medical professional — clean design, fast load times, and on-page SEO configured for local search visibility.</div>
+        <div class="project-url">drpalmanickam.com</div>
+      </div>
+    </a>
+    <a href="https://explicit-finance.com" target="_blank" rel="noopener" class="project-card reveal">
+      <div class="project-img-wrap">
+        <img src="images/explicit-finance.avif" alt="explicit-finance.com" loading="lazy">
+      </div>
+      <div class="project-info">
+        <div class="project-tag">WordPress · SEO · Financial Services</div>
+        <div class="project-name">Explicit Finance</div>
+        <div class="project-desc">Financial advisor website with trust-forward design, structured data markup, and a full SEO strategy targeting high-intent keywords.</div>
+        <div class="project-url">explicit-finance.com</div>
+      </div>
+    </a>
+  </div>
+  <div class="projects-footer reveal">
+    <a href="portfolio/" class="btn-primary magnetic">View All Projects →</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-label reveal" style="justify-content:center;">Get In Touch</div>
+  <h2 class="contact-title reveal">Let's build something<br><span class="lime">great together.</span></h2>
+  <p class="contact-sub reveal">Have a project in mind? Whether it's a new WordPress site, a WooCommerce store, or an SEO overhaul — let's talk.</p>
+  <div class="contact-links reveal">
+    <a href="mailto:hariharanthangavelu08@gmail.com" class="btn-primary magnetic">Send an Email</a>
+    <a href="https://linkedin.com/in/hariharan84" target="_blank" rel="noopener" class="contact-email magnetic">LinkedIn ↗</a>
+    <a href="https://wa.me/919943163218" target="_blank" rel="noopener" class="contact-email magnetic">WhatsApp ↗</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2025 Hariharan. Built with intention.</div>
+  <div class="footer-links">
+    <a href="https://linkedin.com/in/hariharan84" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="mailto:hariharanthangavelu08@gmail.com">Email</a>
+    <a href="portfolio/">Portfolio</a>
+  </div>
+</footer>
+
+<!-- WHATSAPP WIDGET -->
+<div class="wa-widget">
+  <a href="https://wa.me/919943163218" target="_blank" rel="noopener" class="wa-btn" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+  <div class="wa-tooltip">Chat on WhatsApp</div>
+</div>
+
+<script>
+/* ── CURSOR ── */
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+});
+
+function animateRing() {
+  rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a, button, .magnetic, .skill-tag, .project-card').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+
+/* ── HAMBURGER ── */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+
+/* ── MAGNETIC BUTTONS ── */
+document.querySelectorAll('.magnetic').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const r = btn.getBoundingClientRect();
+    const x = e.clientX - r.left - r.width / 2;
+    const y = e.clientY - r.top  - r.height / 2;
+    btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+  });
+  btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+});
+
+/* ── SCROLL REVEAL ── */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => io.observe(el));
+
+/* ── NAV ACTIVE ON SCROLL ── */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const navIO = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => a.classList.remove('active'));
+      const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => navIO.observe(s));
+
+/* ── COUNTER ANIMATION ── */
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const suffix = el.querySelector('span').outerHTML;
+  let count = 0;
+  const step = Math.ceil(target / 40);
+  const timer = setInterval(() => {
+    count = Math.min(count + step, target);
+    el.innerHTML = count + suffix;
+    if (count >= target) clearInterval(timer);
+  }, 35);
+}
+const counterIO = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); counterIO.unobserve(e.target); } });
+}, { threshold: 0.5 });
+document.querySelectorAll('.counter').forEach(el => counterIO.observe(el));
+</script>
+</body>
+</html>
