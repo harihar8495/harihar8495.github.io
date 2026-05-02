@@ -49,7 +49,7 @@ a:focus-visible, button:focus-visible {
   --radius: 4px;
 }
 
-html { scroll-behavior: smooth; cursor: none; }
+html { scroll-behavior: smooth; cursor: none; overflow-x: hidden; }
 
 body {
   font-family: 'Cabinet Grotesk', sans-serif;
@@ -584,9 +584,10 @@ footer {
 
   /* ── HERO MOBILE FIXES ── */
   .hero-title {
-    font-size: clamp(2.4rem, 13vw, 3.2rem);
+    font-size: 11.5vw;
     letter-spacing: -0.02em;
     margin-bottom: 1.5rem;
+    line-height: 1.0;
   }
   .hero-tag {
     font-size: 0.6rem;
