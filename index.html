@@ -98,6 +98,9 @@ nav {
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
   transition: background 0.3s;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
 }
 .nav-logo {
   font-family: 'Syne', sans-serif;
@@ -106,6 +109,8 @@ nav {
   color: var(--white);
   text-decoration: none;
   letter-spacing: -0.02em;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .nav-logo span { color: var(--lime); }
 
@@ -150,7 +155,9 @@ nav {
 
 .hamburger {
   display: none; flex-direction: column; gap: 5px;
-  cursor: none; background: none; border: none; padding: 4px;
+  cursor: pointer; background: none; border: none; padding: 8px;
+  flex-shrink: 0; margin-left: auto; z-index: 501;
+  min-width: 38px; min-height: 38px; align-items: center; justify-content: center;
 }
 .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--white); transition: 0.3s; }
 .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4.5px); }
@@ -570,10 +577,52 @@ footer {
 }
 @media (max-width: 600px) {
   section { padding: 5rem 5vw; }
-  .hero { padding: 0 5vw 4rem; }
+  .hero { padding: 0 4vw 4rem; }
   .hero-bottom { flex-direction: column; align-items: flex-start; }
   .stats-row { gap: 1.5rem; }
   footer { flex-direction: column; align-items: flex-start; }
+
+  /* ── HERO MOBILE FIXES ── */
+  .hero-title {
+    font-size: clamp(2.4rem, 13vw, 3.2rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    white-space: normal;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .hero-name {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-bg-text {
+    font-size: clamp(5rem, 38vw, 10rem);
+  }
+  .hero-desc {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+  .btn-primary, .btn-outline {
+    width: 100%;
+    text-align: center;
+    padding: 0.9rem 1rem;
+  }
+  .hero-bottom {
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .hero-grid { padding-top: 2rem; }
 }
 </style>
 </head>
